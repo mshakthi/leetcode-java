@@ -40,9 +40,10 @@ public class EncodeAndDecodeString {
         while (i < s.length()) {
             int separatorIndex = s.indexOf(SEPARATOR, i);
             int length = Integer.parseInt(s.substring(i, separatorIndex));
-            String str = s.substring(separatorIndex + SEPARATOR.length(), separatorIndex + SEPARATOR.length() + length);
+            int stringStartIndex = separatorIndex + SEPARATOR.length();
+            String str = s.substring(stringStartIndex, stringStartIndex + length);
             result.add(str);
-            i = separatorIndex + SEPARATOR.length() + length;
+            i = stringStartIndex + length;
         }
 
         return result;

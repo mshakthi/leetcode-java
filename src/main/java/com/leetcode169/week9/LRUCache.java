@@ -58,12 +58,11 @@ public class LRUCache {
         Node newNode = new Node(key, value);
         if(map.containsKey(key)){
             remove(map.get(key));
-            map.put(key, newNode);
-        } else {
-            map.put(key, newNode);
+           
+        } 
+        
+        map.put(key, newNode);
             
-        }
-
         insertAtEnd(newNode);
         if(map.size() > capacity){
             Node lru = head.next;

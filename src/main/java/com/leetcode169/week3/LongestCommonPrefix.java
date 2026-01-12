@@ -34,20 +34,20 @@ public class LongestCommonPrefix {
     public String longestCommonPrefix(String[] strs) {
         Arrays.sort(strs, (a,b) -> Integer.compare(a.length(), b.length()));
 
-        String longest = strs[0];
+        String prefix = strs[0];
 
         int i = 1;
-        while(i< strs.length && longest.length() >0){
+        while(i< strs.length && prefix.length() >0){
             String current = strs[i];
 
-            if(current.startsWith(longest)){
+            if(current.startsWith(prefix)){
                 i++;
             } else {
-                longest = longest.substring(0, longest.length() -1);
+                prefix = prefix.substring(0, prefix.length() -1);
             }
         }
 
-        return longest;
+        return prefix;
         
     }
     

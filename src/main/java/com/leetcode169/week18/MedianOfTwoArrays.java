@@ -34,6 +34,10 @@ public class MedianOfTwoArrays {
         int n1 = nums1.length;
         int n2 = nums2.length;
 
+        if(n1>n2){
+            return findMedianSortedArrays(nums2, nums1);
+        }
+
         int n = n1 + n2;
 
         int low = 0;

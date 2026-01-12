@@ -1,5 +1,7 @@
 package com.leetcode169.week1;
 
+import java.util.Arrays;
+
 /**
  * ValidAnagram class provides functionality to check if two strings are anagrams of each other.
  * An anagram is a word or phrase formed by rearranging the letters of another word or phrase,
@@ -46,6 +48,10 @@ public class ValidAnagram {
             if(sChar[i] != tChar[i]){
                 return false;
             }
+        }
+
+        if(!Arrays.equals(sChar, tChar)){
+            return false;
         }
 
         return true;

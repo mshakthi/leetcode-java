@@ -1,6 +1,7 @@
 package com.leetcode169.week6;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,11 +32,7 @@ public class Permutations {
 
     public void buildPermutations(int index, int[] nums, List<List<Integer>> result){
         if(index == nums.length){
-            List<Integer> current = new ArrayList<>();
-            for(int num : nums){
-                current.add(num);
-            }
-            result.add(current);
+            result.add(Arrays.stream(nums).boxed().toList());
             return;
         }
 

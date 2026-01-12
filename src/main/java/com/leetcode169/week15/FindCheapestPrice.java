@@ -69,10 +69,11 @@ public class FindCheapestPrice {
             for(int[] neighbor: adj.get(city)){
                 int nextCity = neighbor[0];
                 int cost = neighbor[1];
+                int newPrice = costSoFar + cost;
 
-                if(costSoFar + cost < price[nextCity]) {
-                    price[nextCity] = costSoFar + cost;
-                    queue.offer(new int[]{nextCity, stops + 1, costSoFar + cost});
+                if(newPrice < price[nextCity]) {
+                    price[nextCity] = newPrice;
+                    queue.offer(new int[]{nextCity, stops + 1, newPrice});
                 }
             }
 

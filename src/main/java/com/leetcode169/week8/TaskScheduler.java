@@ -15,7 +15,7 @@ class TaskCount implements Comparable<TaskCount> {
 
     @Override
     public int compareTo(TaskCount other) {
-        return Integer.compare(other.count, this.count);
+        return Integer.compare(this.count, other.count);
     }
 }
 
@@ -54,7 +54,7 @@ public class TaskScheduler {
      */
     public int leastInterval(char[] tasks, int n) {
         int[] taskCount = new int[26];
-        PriorityQueue<TaskCount> maxHeap = new PriorityQueue<>();
+        PriorityQueue<TaskCount> maxHeap = new PriorityQueue<>((a,b) -> b.compareTo(a));
         
         for(int i =0;i<tasks.length;i++){
             taskCount[tasks[i] - 'A']++;
