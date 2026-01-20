@@ -1,56 +1,45 @@
 package com.leetcode169.week16;
 
+import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class MedianFinder {
-    PriorityQueue<Integer> minHeap;
-    PriorityQueue<Integer> maxHeap;
-    public MedianFinder() {
-        minHeap = new PriorityQueue<>();
-        maxHeap = new PriorityQueue<>((a, b) -> b - a);
-    }
-    
+
+    PriorityQueue<Integer> maxHeap
+            = new PriorityQueue<>(Collections.reverseOrder());
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
     /**
-     * Adds a number to the data structure while maintaining the median property.
+     * Adds a number to the data structure while maintaining the heap invariants.
      * 
-     * <p>This method uses two heaps to efficiently maintain elements such that the median
-     * can be retrieved in constant time:
-     * <ul>
-     *   <li>maxHeap stores the smaller half of numbers (max heap)</li>
-     *   <li>minHeap stores the larger half of numbers (min heap)</li>
-     * </ul>
+     * This method ensures that the maxHeap contains the smaller half of the numbers
+     * and the minHeap contains the larger half. The maxHeap may have one more element
+     * than the minHeap if the total number of elements is odd.
      * 
-     * <p>The algorithm works as follows:
-     * <ol>
-     *   <li>If maxHeap is empty or the number is less than or equal to maxHeap's top,
-     *       add it to maxHeap; otherwise add it to minHeap</li>
-     *   <li>Balance the heaps to ensure maxHeap has at most one more element than minHeap</li>
-     * </ol>
+     * Algorithm:
+     * 1. Add the number to maxHeap
+     * 2. Move the largest element from maxHeap to minHeap
+     * 3. If minHeap becomes larger than maxHeap, balance by moving the smallest
+     *    element from minHeap back to maxHeap
      * 
-     * <p>Time Complexity: O(log n) where n is the number of elements
-     * <p>Space Complexity: O(1) for this operation
+     * Time Complexity: O(log n) where n is the total number of elements
+     * Space Complexity: O(1)
      * 
      * @param num the integer number to be added to the data structure
      */
     public void addNum(int num) {
-        if(maxHeap.isEmpty() || num <=maxHeap.peek()) {
-            maxHeap.offer(num);
-        } else {
-            minHeap.offer(num);
-        }
+        maxHeap.offer(num);
+        minHeap.offer(maxHeap.poll());
 
-        if(maxHeap.size() > minHeap.size()+1) {
-            minHeap.offer(maxHeap.poll());
-        } else if(minHeap.size() > maxHeap.size()) {
+        if (minHeap.size() > maxHeap.size()) {
             maxHeap.offer(minHeap.poll());
         }
-        
     }
-    
+
     public double findMedian() {
-        if(maxHeap.size() == minHeap.size()) {
-            return (maxHeap.peek() + minHeap.peek())/2.0;
+        if (maxHeap.size() > minHeap.size()) {
+            return maxHeap.peek();
         }
-        return maxHeap.peek();
+        return (maxHeap.peek() + minHeap.peek()) / 2.0;
     }
 }
