@@ -46,11 +46,14 @@ public class EmployeeFreeTime {
         List<Interval> res = new ArrayList<>();
         PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> a.start - b.start);  
 
+
         for(List<Interval> emp: schedule){
             for(Interval interval: emp){
                 pq.offer(interval);
             }
         }
+
+        if(pq.isEmpty()) return res;
         
         Interval prev = pq.poll();
 

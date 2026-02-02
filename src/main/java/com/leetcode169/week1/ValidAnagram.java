@@ -44,16 +44,6 @@ public class ValidAnagram {
         }
 
 
-        for(int i = 0; i < 26; i++){
-            if(sChar[i] != tChar[i]){
-                return false;
-            }
-        }
-
-        if(!Arrays.equals(sChar, tChar)){
-            return false;
-        }
-
-        return true;
+        return Arrays.equals(sChar, tChar);
     }
 }
