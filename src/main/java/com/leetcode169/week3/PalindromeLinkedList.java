@@ -16,7 +16,7 @@ import com.commonDataTypes.ListNode;
  * Note: This implementation modifies the input linked list structure during execution
  * by reversing the second half and disconnecting it from the first half.
  */
-public class PaliindromeLinkedList {
+public class PalindromeLinkedList {
     public boolean isPalindrome(ListNode head) {
 
         if(head == null) {

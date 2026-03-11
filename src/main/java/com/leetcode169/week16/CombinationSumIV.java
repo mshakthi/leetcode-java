@@ -1,6 +1,5 @@
 package com.leetcode169.week16;
 
-import java.util.HashMap;
 
 /**
  * Solution for LeetCode Problem 377: Combination Sum IV.
@@ -21,28 +20,41 @@ import java.util.HashMap;
  */
 public class CombinationSumIV {
 
-    public int combinationSum4(int[] nums, int target) {
-        HashMap<Integer, Integer> memo = new HashMap<>();
-        return buildCombinations(nums, target, memo);
-    }
+    // public int combinationSum4(int[] nums, int target) {
+    //     int[] memo = new int[target + 1];
+    //     Arrays.fill(memo, -1);
+    //     memo[0] = 1;
+    //     return buildCombinations(nums, target, memo);
+    // }
 
-    public int buildCombinations(int[] nums, int target, HashMap<Integer, Integer> memo) {
-        if( target == 0) {
-            return 1;
-        }
+    public int combinationSum4(int[] nums, int target){
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
 
-        if(memo.containsKey(target)) {
-            return memo.get(target);
-        }
-
-        for(int num: nums){
-            if(target - num >=0){
-                int count = memo.getOrDefault(target, 0);
-                count += buildCombinations(nums, target - num, memo);
-                memo.put(target, count);
+        for(int i = 1; i <= target; i++) {
+            for(int num: nums) {
+                if(i - num >= 0) {
+                    dp[i] += dp[i - num];
+                }
             }
         }
-        return memo.get(target);
+
+        return dp[target];
+    }
+
+    public int buildCombinations(int[] nums, int target, int[] memo) {
+        if(memo[target] != -1) {
+            return memo[target];
+        }
+
+        int total = 0;
+        for(int num: nums){
+            if(target - num >=0){
+                total += buildCombinations(nums, target - num, memo);
+            }
+        }
+        
+        return memo[target] = total;
     }
 
 

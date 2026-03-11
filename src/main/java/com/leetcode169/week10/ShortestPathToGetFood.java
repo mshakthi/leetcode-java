@@ -22,13 +22,12 @@ public class ShortestPathToGetFood {
         }
 
         int[][] directions = {{1,0}, {-1,0}, {0,1}, {0,-1}};
-        int step = 0;
 
         while(!queue.isEmpty()){
             int[] cell = queue.poll();
             int row = cell[0];
             int col = cell[1];
-            step = cell[2];
+            int step = cell[2];
 
             for(int[] dir : directions){
                 int newRow = row + dir[0];

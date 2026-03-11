@@ -30,17 +30,18 @@ import java.util.Arrays;
 /**
  * Recursive helper function that performs depth-first search with memoization.
  * 
- * @param index The current coin index being considered
- * @param coins The array of coin denominations
+ * @param index  The current coin index being considered
+ * @param coins  The array of coin denominations
  * @param amount The remaining amount to make change for
- * @param memo The memoization table to store computed results
- * @return The minimum number of coins needed for the remaining amount, or Integer.MAX_VALUE if impossible
+ * @param memo   The memoization table to store computed results
+ * @return The minimum number of coins needed for the remaining amount, or
+ *         Integer.MAX_VALUE if impossible
  */
 public class CoinChange {
     public int coinChange(int[] coins, int amount) {
         int[][] memo = new int[coins.length][amount + 1];
-        for(int i = 0; i < coins.length; i++) {
-           Arrays.fill(memo[i], -1);
+        for (int i = 0; i < coins.length; i++) {
+            Arrays.fill(memo[i], -1);
         }
 
         int result = dfs(coins.length - 1, coins, amount, memo);
@@ -48,23 +49,23 @@ public class CoinChange {
     }
 
     public int dfs(int index, int[] coins, int amount, int[][] memo) {
-        if(amount == 0) {
+        if (amount == 0) {
             return 0;
         }
 
-        if(index < 0) {
+        if (index < 0) {
             return Integer.MAX_VALUE;
         }
 
-        if(memo[index][amount] != -1) {
+        if (memo[index][amount] != -1) {
             return memo[index][amount];
         }
 
         int notTake = dfs(index - 1, coins, amount, memo);
         int take = Integer.MAX_VALUE;
-        if(amount >= coins[index]) {
+        if (amount >= coins[index]) {
             int res = dfs(index, coins, amount - coins[index], memo);
-            if(res != Integer.MAX_VALUE) {
+            if (res != Integer.MAX_VALUE) {
                 take = 1 + res;
             }
         }
@@ -72,5 +73,34 @@ public class CoinChange {
         memo[index][amount] = Math.min(notTake, take);
         return memo[index][amount];
     }
-    
+
+    public int coinChangeTabulation(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount + 1];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = 0;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j <= amount; j++) {
+                int notTake = i == 0 ? Integer.MAX_VALUE : dp[i - 1][j];
+                int take = Integer.MAX_VALUE;
+                if (j >= coins[i]) {
+                    int currCoins = dp[i][j - coins[i]];
+                    if (currCoins != Integer.MAX_VALUE) {
+                        take = 1 + currCoins;
+                    }
+                }
+                dp[i][j] = Math.min(notTake, take);
+            }
+        }
+
+        return dp[n - 1][amount] == Integer.MAX_VALUE ? -1 : dp[n - 1][amount];
+
+    }
+
 }

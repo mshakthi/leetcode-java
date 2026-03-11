@@ -24,8 +24,7 @@ public class Trie {
             current.children.putIfAbsent(ch, new TrieNode());
             current = current.children.get(ch);
         }
-        current.isEndOfWord = true;
-        
+        current.isEndOfWord = true;   
     }
     
     public boolean search(String word) {

@@ -22,7 +22,7 @@ public class MergeIntervals {
      * Explanation: Intervals [1,3] and [2,6] overlap, so they are merged into [1,6]
      */
     public int[][] merge(int[][] intervals) {
-        sortIntervals(intervals);
+        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
 
         List<int[]> merged = new ArrayList<>();
         merged.add(intervals[0]);
@@ -43,10 +43,5 @@ public class MergeIntervals {
         return merged.toArray(new int[merged.size()][]);
 
         
-    }
-
-
-    public void sortIntervals(int[][] intervals){
-        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0], b[0]));
     }
 }

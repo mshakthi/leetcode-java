@@ -94,7 +94,7 @@ class AlienDictionary {
 
     /**
      * Returns false if an invalid order is detected (like "abc", "ab").
-     */
+     */ 
     private boolean buildEdge(String w1, String w2,
                               HashMap<Character, List<Character>> graph,
                               HashMap<Character, Integer> inDegree) {
@@ -118,12 +118,8 @@ class AlienDictionary {
                 return true; // Valid difference handled
             }
         }
-
         // No difference found; check invalid prefix: "abc", "ab"
-        if (len1 > len2) {
-            return false;
-        }
 
-        return true;
+        return len1 <= len2;
     }
 }

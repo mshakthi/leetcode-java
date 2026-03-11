@@ -7,7 +7,7 @@ public class CombinationSum {
         public List<List<Integer>> combinationSum(int[] candidates, int target) {
             List<List<Integer>> result = new ArrayList<>();
 
-            buiildCombinations(0, candidates, target, new ArrayList<>(), result);
+            buildCombinations(0, candidates, target, new ArrayList<>(), result);
             return result;
         
         }
@@ -30,7 +30,7 @@ public class CombinationSum {
          * 1. Include the current candidate (allowing reuse by keeping the same index)
          * 2. Exclude the current candidate (moving to the next index)
          */
-        public void buiildCombinations(int index, int[] candidates, int target, List<Integer> current, List<List<Integer>> result){
+        public void buildCombinations(int index, int[] candidates, int target, List<Integer> current, List<List<Integer>> result){
             if(target == 0){
                 result.add(new ArrayList<>(current));
                 return;
@@ -42,11 +42,11 @@ public class CombinationSum {
 
             // include the candidate
             current.add(candidates[index]);
-            buiildCombinations(index, candidates, target - candidates[index], current, result);
+            buildCombinations(index, candidates, target - candidates[index], current, result);
             current.remove(current.size() -1);
 
             // exclude the candidate
-            buiildCombinations(index +1, candidates, target, current, result);
+            buildCombinations(index +1, candidates, target, current, result);
         }
 
 

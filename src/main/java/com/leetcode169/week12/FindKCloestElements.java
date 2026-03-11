@@ -55,7 +55,6 @@ public class FindKCloestElements {
         for (int i = left; i < left + k; i++) {
             result.add(arr[i]);
         }
-
         return result;
         
     }

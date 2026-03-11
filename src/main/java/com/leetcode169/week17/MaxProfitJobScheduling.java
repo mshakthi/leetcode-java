@@ -1,6 +1,7 @@
 package com.leetcode169.week17;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Solution for Maximum Profit in Job Scheduling problem.
@@ -94,5 +95,52 @@ public class MaxProfitJobScheduling {
         }
 
         return left;
+    }
+
+
+    /**
+     * Calculates the maximum profit that can be achieved by scheduling non-overlapping jobs.
+     * Each job has a start time, end time, and associated profit. The function selects a subset
+     * of non-overlapping jobs such that the total profit is maximized.
+     *
+     * @param startTime an array where startTime[i] is the start time of the i-th job
+     * @param endTime an array where endTime[i] is the end time of the i-th job
+     * @param profit an array where profit[i] is the profit of the i-th job
+     * @return the maximum profit achievable by scheduling non-overlapping jobs
+     */
+    public int jobSchedulingWithdp(int[] startTime, int[] endTime, int[] profit) {
+        int n = startTime.length;
+        int[][] jobs = new int[n][3];
+        for (int i = 0; i < n; i++) {
+            jobs[i][0] = startTime[i];
+            jobs[i][1] = endTime[i];
+            jobs[i][2] = profit[i];
+        }
+
+        Arrays.sort(jobs, Comparator.comparingInt(a -> a[0])); // sort by start
+
+        int[] starts = new int[n];
+        for (int i = 0; i < n; i++) starts[i] = jobs[i][0];
+
+        int[] dp = new int[n + 1]; // dp[n] = 0
+
+        for (int i = n - 1; i >= 0; i--) {
+            int next = lowerBound(starts, jobs[i][1]); // first start >= end
+            int take = jobs[i][2] + dp[next];
+            int skip = dp[i + 1];
+            dp[i] = Math.max(take, skip);
+        }
+
+        return dp[0];
+    }
+
+    private int lowerBound(int[] arr, int target) {
+        int lo = 0, hi = arr.length; // [lo, hi)
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (arr[mid] < target) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
     }
 }

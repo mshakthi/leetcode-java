@@ -8,7 +8,6 @@
  * Space Complexity: O(m * n) for the queue and distance matrix
  */
 
-
 /**
  * The row index of the cell.
  */
@@ -47,63 +46,42 @@ package com.leetcode169.week4;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class IndexedNode {
-    int row;
-    int col;
-    int dist;
-
-    IndexedNode(int row, int col, int dist) {
-        this.row = row;
-        this.col = col;
-        this.dist = dist;
-    }
-}
-
 public class Matrix01 {
-      public int[][] updateMatrix(int[][] mat) {
-        int m = mat.length;
-        int n = mat[0].length;
+    public int[][] updateMatrix(int[][] mat) {
+        int m = mat.length, n = mat[0].length;
         int[][] dist = new int[m][n];
+        Queue<int[]> queue = new LinkedList<>();
 
+        // Initialize
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                dist[i][j] = Integer.MAX_VALUE;
-            }
-        }
-
-        Queue<IndexedNode> queue = new LinkedList<>();
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
-                if(mat[i][j] == 0) {
-                    queue.offer(new IndexedNode(i, j, 0));
+                if (mat[i][j] == 0) {
+                    dist[i][j] = 0;
+                    queue.offer(new int[] { i, j });
+                } else {
+                    dist[i][j] = Integer.MAX_VALUE;
                 }
             }
         }
 
-        while(!queue.isEmpty()) {
-            int size = queue.size();
-            for(int i = 0; i < size; i++) {
-                IndexedNode current = queue.poll();
-                int row = current.row;
-                int col = current.col;
-                int distance = current.dist;
-                dist[row][col] = Math.min(dist[row][col], distance);
+        int[][] dirs = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 
-                int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-                for(int[] dir : directions) {
-                    int newRow = row + dir[0];
-                    int newCol = col + dir[1];
-                    if(newRow >= 0 && newRow < m && newCol >= 0 && newCol < n) {
-                        int newDist = distance + 1;
-                        if(dist[newRow][newCol] > newDist) {
-                            queue.offer(new IndexedNode(newRow, newCol, newDist)); 
+        // Multi-source BFS
+        while (!queue.isEmpty()) {
+            int[] cell = queue.poll();
+            int r = cell[0], c = cell[1];
 
-                        }
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                if (nr >= 0 && nr < m && nc >= 0 && nc < n) {
+                    if (dist[nr][nc] > dist[r][c] + 1) {
+                        dist[nr][nc] = dist[r][c] + 1;
+                        queue.offer(new int[] { nr, nc });
                     }
                 }
             }
         }
+
         return dist;
-        
     }
 }

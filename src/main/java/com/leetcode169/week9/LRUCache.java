@@ -13,6 +13,11 @@ class Node {
         this.value = value;
     }
 }
+
+/**
+ * LRU (Least Recently Used) Cache implementation using a combination of HashMap and Doubly Linked List.
+ * The cache supports O(1) time complexity for both get and put operations.
+ */
 public class LRUCache {
     HashMap<Integer, Node> map;
     int capacity;
@@ -58,7 +63,6 @@ public class LRUCache {
         Node newNode = new Node(key, value);
         if(map.containsKey(key)){
             remove(map.get(key));
-           
         } 
         
         map.put(key, newNode);

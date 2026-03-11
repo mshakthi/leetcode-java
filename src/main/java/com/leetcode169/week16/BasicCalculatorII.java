@@ -41,7 +41,7 @@ public class BasicCalculatorII {
             } 
             
             // Process operator or end of string
-            if(!Character.isDigit(curr) && !Character.isWhitespace(curr) || i == s.length() -1){
+            if((!Character.isDigit(curr) && !Character.isWhitespace(curr)) || i == s.length() -1){
                 if(operator == '+'){
                     stack.push(num);
                 } else if(operator == '-'){

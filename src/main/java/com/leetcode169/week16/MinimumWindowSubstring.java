@@ -3,6 +3,31 @@ package com.leetcode169.week16;
 import java.util.HashMap;
 
 public class MinimumWindowSubstring {
+    /**
+     * Finds the minimum window substring in string s that contains all characters from string t.
+     * Uses a sliding window approach with two pointers and a frequency map.
+     * 
+     * <p>Algorithm:
+     * <ul>
+     *   <li>Creates a frequency map of characters in string t</li>
+     *   <li>Expands the window by moving right pointer until all characters are found</li>
+     *   <li>Contracts the window by moving left pointer while maintaining all characters</li>
+     *   <li>Tracks the minimum window that contains all required characters</li>
+     * </ul>
+     * 
+     * <p>Time Complexity: O(m + n) where m is the length of s and n is the length of t
+     * <br>Space Complexity: O(k) where k is the number of unique characters in t
+     * 
+     * @param s the source string to search within
+     * @param t the target string containing characters to find
+     * @return the minimum window substring that contains all characters from t,
+     *         or an empty string if no such window exists
+     * 
+     * @example
+     * minWindow("ADOBECODEBANC", "ABC") returns "BANC"
+     * minWindow("a", "a") returns "a"
+     * minWindow("a", "aa") returns ""
+     */
     public String minWindow(String s, String t) {
         HashMap<Character, Integer> freq = new HashMap<>();
 
